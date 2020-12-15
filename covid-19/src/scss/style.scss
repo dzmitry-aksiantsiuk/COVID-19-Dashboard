@@ -1,0 +1,14 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  background: url('../assets/images/coronavirus.jpg') center / cover no-repeat;
+}
+
+.continer {
+  max-width: 1200px;
+}
