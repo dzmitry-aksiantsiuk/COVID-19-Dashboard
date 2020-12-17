@@ -15,7 +15,7 @@ const countryMap = {
   'Syrian Arab Republic (Syria)': 'Syrian Arab Republic',
   'Taiwan, Republic of China': 'Taiwan',
   'United Kingdom': 'United Kingdom of Great Britain and Northern Ireland',
-  'Venezuela (Bolivarian Republic)': 'Venezuela (Bolivarian Republic of)'
+  'Venezuela (Bolivarian Republic)': 'Venezuela (Bolivarian Republic of)',
 };
 
 class Table {

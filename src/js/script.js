@@ -1,4 +1,4 @@
-import '../scss/style.scss'
+import '../scss/style.scss';
 
 import { Table } from './renderTable.js';
 
@@ -10,7 +10,7 @@ async function featchCovidStats() {
 }
 
 const fetchCountries = async () => {
-  const countries = await fetch('https://restcountries.eu/rest/v2/all?fields=name;population;flag').then(res => res.json());
+  const countries = await fetch('https://restcountries.eu/rest/v2/all?fields=name;population;flag').then((res) => res.json());
   return countries;
 };
 
@@ -22,3 +22,4 @@ async function buildTable() {
 }
 buildTable();
 featchCovidStats();
+console.log('hellow');

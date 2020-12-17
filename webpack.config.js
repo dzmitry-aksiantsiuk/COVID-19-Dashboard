@@ -7,15 +7,15 @@ module.exports = {
   entry: './src/js/script.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
 
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-        title: 'Covid-19 Dashboard',
-        template: path.resolve(__dirname, './src/index.html'),
-        filename: 'index.html',
+      title: 'Covid-19 Dashboard',
+      template: path.resolve(__dirname, './src/index.html'),
+      filename: 'index.html',
     }),
   ],
 
@@ -34,6 +34,6 @@ module.exports = {
         test: /\.(scss|css)$/,
         use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
       },
-    ]
-  }
+    ],
+  },
 };
