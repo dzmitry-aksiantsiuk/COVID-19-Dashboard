@@ -1,3 +1,5 @@
+import '../scss/style.scss'
+
 import { Table } from './renderTable.js';
 
 async function featchCovidStats() {
