@@ -1,69 +1,132 @@
-const countryMap = {
-  Bolivia: 'Bolivia (Plurinational State of)',
-  'Cape Verde': 'Cabo Verde',
-  'Congo (Brazzaville)': 'Congo',
-  'Congo (Kinshasa)': 'Congo (Democratic Republic of the)',
-  'Holy See (Vatican City State)': 'Holy See',
-  'Iran, Islamic Republic of': 'Iran (Islamic Republic of)',
-  'Korea (South)': 'Korea (Democratic People\'s Republic of)',
-  'Lao PDR': 'Lao People\'s Democratic Republic',
-  'Macao, SAR China': 'Macao',
-  'Macedonia, Republic of': 'Macedonia (the former Yugoslav Republic of)',
-  Moldova: 'Moldova (Republic of)',
-  'Palestinian Territory': 'Palestine, State of',
-  'Saint Vincent and Grenadines': 'Saint Vincent and the Grenadines',
-  'Syrian Arab Republic (Syria)': 'Syrian Arab Republic',
-  'Taiwan, Republic of China': 'Taiwan',
-  'United Kingdom': 'United Kingdom of Great Britain and Northern Ireland',
-  'Venezuela (Bolivarian Republic)': 'Venezuela (Bolivarian Republic of)',
-};
+import { numberWithCommas } from './countryList';
 
-class Table {
-  constructor(data, flags) {
-    this.global = data.Global;
-    this.countries = data.Countries;
-    this.flags = flags;
+function createTitle() {
+  return `
+    <th>Confirmed</th>
+    <th>Deaths</th>
+    <th>Recovered</th>
+  `;
+}
+
+class BuildTable {
+  constructor(country) {
+    this.country = country;
   }
 
   render() {
     const wrraper = document.createElement('div');
-    wrraper.classList.add('tableWrraper');
-    // const wrapper = document.querySelector('.tableWrapper');
     this.el = document.createElement('table');
+    this.root = document.querySelector('.root');
+    wrraper.classList.add('tableWrraper');
     this.el.classList.add('table');
     this.el.innerHTML = /* html */`
       <thead>
         <tr>
-          <th>Country</th>
-          <th>Total Confirmed</th>
-          <th>Total Deaths</th>
-          <th>Total Recovered</th>
+          <th colspan="3"><img class="table__img" src="${this.country.flag}"> <span class="title">World</span></th>
         </tr>
       </thead>
-      <tbody class='table__body'>
+      <tbody>
         <tr>
-          <td>World</td>
-          <td>${this.global.TotalConfirmed}</td>
-          <td>${this.global.TotalDeaths}</td>
-          <td>${this.global.TotalRecovered}</td>
+          <th colspan="3">Total Cases</th>
         </tr>
-      </tbody>
-      <tbody class='table__body'>
-        ${this.countries.map((country) => `
-          <tr>
-            <td>
-              <img class='table__img' src='${this.flags.find((c) => c.name === (countryMap[country.Country] || country.Country))?.flag}'>
-              ${country.Country}
-            </td>
-            <td>${country.TotalConfirmed}</td>
-            <td>${country.TotalDeaths}</td>
-            <td>${country.TotalRecovered}</td>
-          </tr>
-        `).join('')}
+        <tr>
+          ${createTitle()}
+        </tr>
+        <tr>
+          <td class="total">${numberWithCommas(this.country.totalConfirmed)}</td>
+          <td class="total">${numberWithCommas(this.country.totalDeaths)}</td>
+          <td class="total">${numberWithCommas(this.country.totalRecovered)}</td>
+        </tr>
+        <tr>
+          <th class="hide" colspan="3">For the last day</th>
+        </tr>
+        <tr class="hide">
+          ${createTitle()}
+        </tr>
+        <tr>
+          <td class="last__day hide">${numberWithCommas(this.country.newConfirmed)}</td>
+          <td class="last__day hide">${numberWithCommas(this.country.newDeaths)}</td>
+          <td class="last__day hide">${numberWithCommas(this.country.newRecovered)}</td>
+        </tr>
+        <tr>
+          <th class="hide" colspan="3">per 100k</th>
+        </tr>
+        <tr class="hide">
+          ${createTitle(this.country.TotalConfirmed100k)}
+        </tr>
+        <tr>
+          <td class="per100 hide">${numberWithCommas(this.country.totalConfirmed100k)}</td>
+          <td class="per100 hide">${numberWithCommas(this.country.totalDeaths100k)}</td>
+          <td class="per100 hide">${numberWithCommas(this.country.totalRecovered100k)}</td>
+        </tr>
+        <tr class="hide">
+          <th colspan="3">per 100k last day</th>
+        </tr>
+        <tr class="hide">
+          ${createTitle()}
+        </tr>
+        <tr>
+        <td class="per100__last-day hide">
+          ${numberWithCommas(this.country.newConfirmed100k)}</td>
+        <td class="per100__last-day hide">
+          ${numberWithCommas(this.country.newDeaths100k)}</td>
+        <td class="per100__last-day hide">
+          ${numberWithCommas(this.country.newRecovered100k)}</td>
+        </tr>
       </tbody>`;
+
+    this.title = this.el.querySelector('.title');
+    this.img = this.el.querySelector('.table__img');
+    this.totalCases = this.el.querySelectorAll('.total');
+    this.lastDay = this.el.querySelectorAll('.last__day');
+    this.per100 = this.el.querySelectorAll('.per100');
+    this.per100LastDay = this.el.querySelectorAll('.per100__last-day');
+
     wrraper.append(this.el);
-    document.body.append(wrraper);
+    document.body.prepend(wrraper);
+  }
+
+  // switchMode(mod) {
+
+  // }
+
+  updateData(country) {
+    const {
+      name,
+      newConfirmed,
+      newDeaths,
+      newRecovered,
+      totalConfirmed,
+      totalDeaths,
+      totalRecovered,
+      flag,
+      newConfirmed100k,
+      newDeaths100k,
+      newRecovered100k,
+      totalConfirmed100k,
+      totalDeaths100k,
+      totalRecovered100k,
+    } = country;
+
+    this.img.src = flag;
+    this.title.textContent = name;
+
+    this.totalCases[0].textContent = numberWithCommas(totalConfirmed);
+    this.totalCases[1].textContent = numberWithCommas(totalDeaths);
+    this.totalCases[2].textContent = numberWithCommas(totalRecovered);
+
+    this.lastDay[0].textContent = numberWithCommas(newConfirmed);
+    this.lastDay[1].textContent = numberWithCommas(newDeaths);
+    this.lastDay[2].textContent = numberWithCommas(newRecovered);
+
+    this.per100[0].textContent = numberWithCommas(totalConfirmed100k);
+    this.per100[1].textContent = numberWithCommas(totalDeaths100k);
+    this.per100[2].textContent = numberWithCommas(totalRecovered100k);
+
+    this.per100LastDay[0].textContent = numberWithCommas(newConfirmed100k);
+    this.per100LastDay[1].textContent = numberWithCommas(newDeaths100k);
+    this.per100LastDay[2].textContent = numberWithCommas(newRecovered100k);
   }
 }
 
-export { Table };
+export { BuildTable };
