@@ -11,5 +11,11 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
+    'linebreak-style': 0,
+    'import/no-extraneous-dependencies': ['error', { devDependencies: ['**/webpack.*.js'] }],
+    'max-len': ['error', { code: 120 }],
+    'no-param-reassign': ['error', { props: false }],
+    'no-shadow': 'off',
+    'import/no-mutable-exports': 'off',
   },
 };

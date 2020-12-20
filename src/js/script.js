@@ -1,6 +1,6 @@
-import '../scss/style.scss'
-
+import '../scss/style.scss';
 import { Table } from './renderTable.js';
+import renderMap from './renderMap';
 
 async function featchCovidStats() {
   const url = 'https://api.covid19api.com/summary';
@@ -10,7 +10,7 @@ async function featchCovidStats() {
 }
 
 const fetchCountries = async () => {
-  const countries = await fetch('https://restcountries.eu/rest/v2/all?fields=name;population;flag').then(res => res.json());
+  const countries = await fetch('https://restcountries.eu/rest/v2/all?fields=name;population;flag').then((res) => res.json());
   return countries;
 };
 
@@ -20,5 +20,7 @@ async function buildTable() {
   const tab = new Table(data, country);
   tab.render();
 }
+
+renderMap();
 buildTable();
 featchCovidStats();
