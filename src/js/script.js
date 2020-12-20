@@ -1,6 +1,6 @@
 import '../scss/style.scss';
-
 import { Table } from './renderTable.js';
+import renderMap from './renderMap';
 
 async function featchCovidStats() {
   const url = 'https://api.covid19api.com/summary';
@@ -20,6 +20,7 @@ async function buildTable() {
   const tab = new Table(data, country);
   tab.render();
 }
+
+renderMap();
 buildTable();
 featchCovidStats();
-console.log('hellow');
