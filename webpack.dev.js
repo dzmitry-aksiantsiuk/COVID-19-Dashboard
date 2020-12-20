@@ -1,6 +1,5 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { HotModuleReplacementPlugin } = require('webpack');
 
 module.exports = {
@@ -10,9 +9,9 @@ module.exports = {
     historyApiFallback: true,
     contentBase: path.resolve(__dirname, './dist'),
     headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
-        "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+      'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
     },
     open: true,
     compress: true,
@@ -23,15 +22,15 @@ module.exports = {
   entry: './src/js/script.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
 
   plugins: [
     new HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
-        title: 'Covid-19 Dashboard',
-        template: path.resolve(__dirname, './src/index.html'),
-        filename: 'index.html',
+      title: 'Covid-19 Dashboard',
+      template: path.resolve(__dirname, './src/index.html'),
+      filename: 'index.html',
     }),
   ],
 
@@ -50,6 +49,6 @@ module.exports = {
         test: /\.(scss|css)$/,
         use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
       },
-    ]
-  }
+    ],
+  },
 };
