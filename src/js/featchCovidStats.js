@@ -1,8 +1,8 @@
-async function featchCovidStats() {
+async function featchCovidStat() {
   const url = 'https://api.covid19api.com/summary';
   const response = await fetch(url);
   const data = await response.json();
   return data;
 }
 
-export default featchCovidStats;
+export default featchCovidStat;
