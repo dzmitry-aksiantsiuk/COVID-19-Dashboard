@@ -1,19 +1,27 @@
 import { featchCovidStats } from '../fetchCovidStatsAndPopulation';
-import renderButtonsForMap from './renderButtonsFromMap';
+// import renderButtonsForMap from './renderButtonsFromMap';
 import renderHeatLegendForMap from './renderHeatLegendForMap';
 import renderDateForMap from './renderDateForMap';
+import addHitEvents from './hitEvents';
+import getDataCases from './getDataCases';
+import { chart, polygonSeries } from './config';
 
 const renderMap = async () => {
   const fetchedData = await featchCovidStats();
-  const worldData = await fetchedData.Countries;
-  const date = await fetchedData.Date;
+  const worldData = fetchedData.Countries;
+  const date = fetchedData.Date;
   const cases = [];
+  worldData.forEach((country) => {
+    // cases.push({ id: country.CountryCode, totalConfirmed: country.TotalConfirmed });
+    cases.push({ id: country.CountryCode, value: country.TotalConfirmed || 1, name: country.Country });
+  });
+  getDataCases(worldData);
 
   // Theme
   am4core.useTheme(am4themes_animated);
 
   // Create map instanc
-  const chart = am4core.create('global-map', am4maps.MapChart);
+  // const chart = am4core.create('global-map', am4maps.MapChart);
 
   // Set map definition
   chart.geodata = am4geodata_worldLow;
@@ -22,7 +30,7 @@ const renderMap = async () => {
   chart.projection = new am4maps.projections.Miller();
 
   // Create map polygon series
-  const polygonSeries = chart.series.push(new am4maps.MapPolygonSeries());
+  // const polygonSeries = chart.series.push(new am4maps.MapPolygonSeries());
 
   // Make map load polygon (like country names) data from GeoJSON
   polygonSeries.useGeodata = true;
@@ -31,6 +39,7 @@ const renderMap = async () => {
   const polygonTemplate = polygonSeries.mapPolygons.template;
   // polygonTemplate.tooltipText = '{name}: {totalConfirmed}';
   polygonTemplate.tooltipText = '{name}: {value}';
+  polygonTemplate.propertyFields.id = 'name';
   polygonTemplate.fill = am4core.color('#3b3b3b');
   polygonTemplate.fillOpacity = 1;
   polygonTemplate.stroke = am4core.color('#ffffff');
@@ -42,12 +51,11 @@ const renderMap = async () => {
 
   // Remove Antarctica
   polygonSeries.exclude = ['AQ'];
-
+  // getDataCases(worldData);
   // Гpdating the map data
-  worldData.forEach((country) => {
-    // cases.push({ id: country.CountryCode, totalConfirmed: country.TotalConfirmed });
-    cases.push({ id: country.CountryCode, value: country.TotalConfirmed || 1 });
-  });
+
+  
+
   polygonSeries.data = cases;
 
   // Add heat rule
@@ -59,8 +67,10 @@ const renderMap = async () => {
     logarithmic: true,
   });
 
+  addHitEvents(polygonSeries);
+
   // Add Buttons
-  renderButtonsForMap(polygonSeries, chart, worldData, cases);
+  // renderButtonsForMap(polygonSeries, chart, worldData, cases);
 
   // Add heat legend for map
   renderHeatLegendForMap(polygonSeries, chart);
