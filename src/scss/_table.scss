@@ -1,13 +1,21 @@
 .tableWrraper {
   margin: 0 auto;
-  padding-top: 100px;
-  display: flex;
+  margin-right: 15px;
+}
+
+.inner__wrraper {
+  width: 300px;
+  margin: 0px 0 0 40px;
+  position: relative;
+}
+
+.inner__wrraper-FS {
+  margin: 10px 0 0 20px;
 }
 
 .table {
   min-width: 300px;
-  min-height: 400px;
-  margin-left: 20px;
+  min-height: 100px;
 
   &__body {
     text-align: center;
@@ -29,6 +37,27 @@
   thead > tr > th {
     font-size: 20px;
   }
+
+  .confirmed { background-color: #4343ec; }
+
+  .deaths { background-color: #dd3a3a; }
+
+  .recovered { background-color: #44db44; }
+
+  .titles {
+    cursor: pointer;
+  }
+}
+
+select {
+  width: 100%;
+  background-color: transparent;
+  font-family: trebuchet ms, sans-serif;
+  text-align-last:center
+}
+
+.hide {
+  display: none;
 }
 
 ::-webkit-scrollbar {width: 8px; height: 8px;}

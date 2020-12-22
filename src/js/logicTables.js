@@ -1,6 +1,6 @@
 import { featchCovidStats, fetchCountries } from './fetchCovidStatsAndPopulation';
 import { BuildTable } from './renderTable';
-import { ContriesList } from './countryList';
+import { ContriesList } from './renderCountryList';
 
 function calcFor100k(dividend, divisor) {
   return Math.round((dividend / divisor) * 100000);
@@ -95,12 +95,42 @@ async function tables() {
   };
 
   const countriesList = document.querySelector('.countries__list');
+  const select = document.querySelector('.select');
+  const countriesBtn = document.querySelector('.full__screen-countries-btn');
+  const countriesWrraper = document.querySelector('.countries');
+  const tableBtn = document.querySelector('.full__screen-table-btn');
+  const tableWrraper = document.querySelector('.inner__wrraper');
+  const tbody = document.getElementsByTagName('tbody')[0];
+  let selectValue = select.value;
+
+  const inFullScreenCountries = () => {
+    const ul = countriesWrraper.querySelector('.countries__list');
+    countriesWrraper.classList.toggle('full__screen');
+    ul.classList.toggle('ul__full-screen');
+  };
+
+  const inFullScreenTable = () => {
+    const table = tableWrraper.querySelector('.table');
+    tableWrraper.classList.toggle('inner__wrraper-FS');
+    tableWrraper.classList.toggle('full__screen');
+    table.classList.toggle('full__screen');
+  };
 
   countriesList.addEventListener('click', (event) => {
     if (event.target === countriesList) return;
     const item = event.target.closest('.country');
     updateTableStats(item);
   });
+
+  select.addEventListener('click', (event) => {
+    if (event.target.value === selectValue) return;
+    dataTable.changeIndicator(tbody);
+    selectValue = select.value;
+    countriesTable.updateData(selectValue.split('data-').join(''));
+  });
+
+  tableBtn.addEventListener('click', inFullScreenTable);
+  countriesBtn.addEventListener('click', inFullScreenCountries);
 }
 
 export { tables };

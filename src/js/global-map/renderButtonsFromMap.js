@@ -1,6 +1,13 @@
+import {
+  changeButtonTotalConfirmedStatus,
+  changebuttonTotalRecoveredStatus,
+  changebuttonTotalDeathsStatus,
+} from './config';
+import updateDataCases from './updatetDataCases';
+import updateColorOfMap from './updateColorOfMap';
 import renderButtonIcon from './renderIconForButtons';
 
-const renderButtonsForMap = (polygonSeries, chart, worldData, cases) => {
+const renderButtonsForMap = (chart, worldData) => {
   const confirmedButtonIconColor = am4core.color('#193eb4');
   const recoveredButtonIconColor = am4core.color('#72b710');
   const deathsButtonIconColor = am4core.color('#d62929');
@@ -13,25 +20,12 @@ const renderButtonsForMap = (polygonSeries, chart, worldData, cases) => {
   buttonTotalConfirmed.margin(0, 0, 10, 10);
   buttonTotalConfirmed.cursorOverStyle = am4core.MouseCursorStyle.pointer;
   buttonTotalConfirmed.events.on('hit', () => {
-    // Updating the map data
-    cases.splice(0, cases.length);
-    worldData.forEach((country) => {
-      // cases.push({ id: country.CountryCode, totalConfirmed: country.TotalConfirmed || 0 });
-      cases.push({ id: country.CountryCode, value: country.TotalConfirmed || 1 });
-    });
-    polygonSeries.data = cases;
-
-    // Updating the color of the map
-    polygonSeries.heatRules.values.splice(0, polygonSeries.heatRules.length);
-    polygonSeries.heatRules.push({
-      property: 'fill',
-      target: polygonSeries.mapPolygons.template,
-      min: am4core.color('#aec1ff'),
-      max: am4core.color('#011a6b'),
-      logarithmic: true,
-    });
+    changeButtonTotalConfirmedStatus(true);
+    changebuttonTotalRecoveredStatus(false);
+    changebuttonTotalDeathsStatus(false);
+    updateDataCases(worldData);
+    updateColorOfMap();
   });
-  // Render icon for button
   renderButtonIcon(buttonTotalConfirmed, confirmedButtonIconColor);
 
   const buttonTotalRecovered = chart.chartContainer.createChild(am4core.Button);
@@ -42,24 +36,12 @@ const renderButtonsForMap = (polygonSeries, chart, worldData, cases) => {
   buttonTotalRecovered.padding(5, 5, 5, 5);
   buttonTotalRecovered.cursorOverStyle = am4core.MouseCursorStyle.pointer;
   buttonTotalRecovered.events.on('hit', () => {
-    // Updating the map data
-    cases.splice(0, cases.length);
-    worldData.forEach((country) => {
-      cases.push({ id: country.CountryCode, value: country.TotalRecovered || 1 });
-    });
-    polygonSeries.data = cases;
-
-    // Updating the color of the map
-    polygonSeries.heatRules.values.splice(0, polygonSeries.heatRules.length);
-    polygonSeries.heatRules.push({
-      property: 'fill',
-      target: polygonSeries.mapPolygons.template,
-      min: am4core.color('#caff96'),
-      max: am4core.color('#244800'),
-      logarithmic: true,
-    });
+    changeButtonTotalConfirmedStatus(false);
+    changebuttonTotalRecoveredStatus(true);
+    changebuttonTotalDeathsStatus(false);
+    updateDataCases(worldData);
+    updateColorOfMap();
   });
-  // Render icon for button
   renderButtonIcon(buttonTotalRecovered, recoveredButtonIconColor);
 
   const buttonTotalDeaths = chart.chartContainer.createChild(am4core.Button);
@@ -70,24 +52,12 @@ const renderButtonsForMap = (polygonSeries, chart, worldData, cases) => {
   buttonTotalDeaths.padding(5, 5, 5, 5);
   buttonTotalDeaths.cursorOverStyle = am4core.MouseCursorStyle.pointer;
   buttonTotalDeaths.events.on('hit', () => {
-    // Updating the map data
-    cases.splice(0, cases.length);
-    worldData.forEach((country) => {
-      cases.push({ id: country.CountryCode, value: country.TotalDeaths || 1 });
-    });
-    polygonSeries.data = cases;
-
-    // Updating the color of the map
-    polygonSeries.heatRules.values.splice(0, polygonSeries.heatRules.length);
-    polygonSeries.heatRules.push({
-      property: 'fill',
-      target: polygonSeries.mapPolygons.template,
-      min: am4core.color('#ff9696'),
-      max: am4core.color('#700b00'),
-      logarithmic: true,
-    });
+    changeButtonTotalConfirmedStatus(false);
+    changebuttonTotalRecoveredStatus(false);
+    changebuttonTotalDeathsStatus(true);
+    updateDataCases(worldData);
+    updateColorOfMap();
   });
-  // Render icon for button
   renderButtonIcon(buttonTotalDeaths, deathsButtonIconColor);
 };
 

@@ -12,7 +12,6 @@ const renderHeatLegendForMap = (polygonSeries, chart) => {
   heatLegend.marginRight = am4core.percent(1);
   heatLegend.valueAxis.renderer.opposite = true;
   heatLegend.valueAxis.renderer.dx = -25;
-  // heatLegend.valueAxis.strictMinMax = false;
   heatLegend.valueAxis.fontSize = 11;
   heatLegend.valueAxis.logarithmic = true;
 
