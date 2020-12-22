@@ -10,14 +10,17 @@ class ContriesList {
   render() {
     this.parent = document.querySelector('.tableWrraper');
     this.wrraper = document.createElement('div');
+    this.fullScreen = document.createElement('div');
     this.input = document.createElement('input');
     this.input.type = 'search';
     this.ul = document.createElement('ul');
     this.wrraper.classList.add('countries');
+    this.fullScreen.classList.add('full__screen-countries-btn');
+    this.fullScreen.innerHTML = '<img src="./cdcover7.svg" alt="">';
     this.input.classList.add('search__input');
     this.ul.classList.add('countries__list');
     this.updateData();
-    this.wrraper.append(this.input);
+    this.wrraper.append(this.fullScreen, this.input);
     this.wrraper.append(this.ul);
     this.parent.append(this.wrraper);
     this.search();
@@ -28,9 +31,9 @@ class ContriesList {
     this.input.addEventListener('input', this.updateData.bind(this));
   }
 
-  updateData() {
+  updateData(indicator = 'totalConfirmed') {
     this.ul.innerHTML = '';
-    Object.values(this.data).flat()
+    Object.values(this.sortList(indicator)).flat()
       .filter((country) => country.name.toLowerCase().includes(this.input.value.toLowerCase()))
       .forEach((country) => {
         const li = document.createElement('li');
@@ -58,10 +61,8 @@ class ContriesList {
       });
   }
 
-  sortList() {
-    const lists = this.ul.querySelectorAll('.country');
-    const cb = (item) => item.children[2].firstChild.textContent.match(/\d/g).join('');
-    lists.forEach(cb);
+  sortList(significative) {
+    return Object.values(this.data).flat().sort((a, b) => b[significative] - a[significative]);
   }
 }
 
