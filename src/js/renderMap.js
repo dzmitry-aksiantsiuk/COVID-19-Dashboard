@@ -1,4 +1,4 @@
-import featchCovidStats from './featchCovidStats';
+import { featchCovidStats } from './fetchCovidStatsAndPopulation';
 
 const renderMap = async () => {
   const fetchedData = await featchCovidStats();
