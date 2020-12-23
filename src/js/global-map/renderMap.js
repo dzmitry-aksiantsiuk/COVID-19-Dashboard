@@ -9,6 +9,7 @@ import { updateDataCases } from './updatetDataCases';
 import { renderDateForMap } from './renderDateForMap';
 import { renderButtonsForMap } from './renderButtonsFromMap';
 import { renderHeatLegendForMap } from './renderHeatLegendForMap';
+import { renderFullScreenButton } from './renderFullScreenButton';
 import { updateColorOfMap } from './updateColorOfMap';
 import { addHitEvents } from './hitEvents';
 
@@ -37,6 +38,8 @@ export const renderMap = async () => {
   const hs = polygonTemplate.states.create('hover');
   hs.properties.fill = color('#dbdbdb');
   polygonSeries.exclude = ['AQ'];
+
+  renderFullScreenButton();
 
   updateDataCases(worldData);
   updateColorOfMap();
