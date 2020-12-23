@@ -16,8 +16,7 @@ class BuildTable {
   render() {
     this.fullScreen = document.createElement('div');
     this.fullScreen.classList.add('full__screen-table-btn');
-    // this.fullScreen.innerHTML = '<img src="./assets/images/cdcover7.svg" alt="">';
-    this.fullScreen.innerHTML = '<i class="mdi mdi-fullscreen"></i>';
+    this.fullScreen.innerHTML = '<img src="./assets/images/cdcover7.svg" alt="">';
     const wrraper = document.createElement('div');
     const innerWrraper = document.createElement('div');
     this.table = document.createElement('table');

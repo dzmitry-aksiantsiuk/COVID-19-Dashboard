@@ -78,29 +78,19 @@ body {
 }
 
 .full__screen-countries-btn, .full__screen-table-btn {
-  display: flex;
-  justify-content: center;
   width: 20px;
   height: 20px;
+  border-radius: 100%;
   position: absolute;
   top: -5px;
   right: -5px;
   z-index: 98;
   cursor: pointer;
-  transition: all 0.3s;
-  background: #5a5a5a;
 
-  .mdi-fullscreen {
-    color: white;
+  img {
+    width: 100%;
+    height: 100%;
   }
-}
-
-.full__screen-countries-btn:hover {
-  background: rgb(151, 24, 24);
-}
-
-.full__screen-table-btn:hover {
-  background: rgb(151, 24, 24);
 }
 
 .full__screen {
