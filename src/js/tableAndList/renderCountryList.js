@@ -16,7 +16,7 @@ class ContriesList {
     this.ul = document.createElement('ul');
     this.wrraper.classList.add('countries');
     this.fullScreen.classList.add('full__screen-countries-btn');
-    this.fullScreen.innerHTML = '<img src="./cdcover7.svg" alt="">';
+    this.fullScreen.innerHTML = '<img src="./assets/images/cdcover7.svg" alt="">';
     this.input.classList.add('search__input');
     this.ul.classList.add('countries__list');
     this.updateData();

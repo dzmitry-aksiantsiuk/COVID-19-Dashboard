@@ -12,7 +12,7 @@
 
   .tableWrraper {
     grid-column-start: 1;
-    grid-column-end: 1;
+    grid-column-end: 3;
     display: flex;
   }
 
@@ -20,17 +20,18 @@
     height: 129px;
   }
 
-  #global-map {
+  .global-map {
+    height: 250px;
     grid-column-start: 1;
-    grid-column-end: 1;
+    grid-column-end: 3;
   }
 
-  #global-map {
-    height: 250px;
+  .global-map_full-screen.global-map_full-screen {
+    top: 199px;
   }
 }
 
-@media (max-width: 320px) {
+@media (max-width: 499px) {
   #root {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr auto 1fr;
