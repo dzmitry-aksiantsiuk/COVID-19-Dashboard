@@ -1,7 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { HotModuleReplacementPlugin } = require('webpack');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   mode: 'development',
@@ -32,6 +32,14 @@ module.exports = {
       title: 'Covid-19 Dashboard',
       template: path.resolve(__dirname, './src/index.html'),
       filename: 'index.html',
+    }),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, 'src/assets/images'),
+          to: path.resolve(__dirname, 'dist/assets/images'),
+        },
+      ],
     }),
   ],
 

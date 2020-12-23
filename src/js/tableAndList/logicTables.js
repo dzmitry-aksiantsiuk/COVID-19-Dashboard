@@ -76,6 +76,9 @@ function joinApiData(stats, countries) {
 
 async function tables() {
   const [stats, countries] = [...await Promise.all([featchCovidStats(), fetchCountries()])];
+
+  if (!stats || !countries) return;
+
   const data = joinApiData(stats, countries);
   const dataTable = new BuildTable(data.global);
   const countriesTable = new ContriesList(data);
