@@ -10,6 +10,7 @@
 }
 
 body {
+  overflow: hidden;
   height: 100vh;
   background: url('../assets/images/coronavirus.jpg') center / cover no-repeat;
   font-family: trebuchet ms, sans-serif;
@@ -19,7 +20,7 @@ body {
 
 .global-map {
   width: 100%;
-  height: 500px;
+  height: 350px;
 }
 
 #global-map__wrapper {
@@ -110,6 +111,8 @@ body {
 /* FOOTER */
 
 .footer {
+  position: absolute;
+  bottom: 0;
   width: 100%;
   background: rgb(32, 32, 32);
 }
